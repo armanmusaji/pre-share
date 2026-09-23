@@ -45,3 +45,12 @@ test('late responses cannot apply after another accept or reset',()=>{
   assert.throws(()=>apply(n,p,'Conditional',true),/older version/);
   assert.throws(()=>apply(restore(n,initial()),p,'Conditional',true),/older version/);
 });
+
+test('saved repairs follow item IDs even when display order changes',()=>{
+  const s=initial();s.items.reverse();const next=apply(s,conditional(s),'Conditional',true);
+  assert.equal(next.items.find(i=>i.id==='task-announcement').state,'Waiting');
+  assert.equal(next.items.find(i=>i.id==='recap-launch').text,'Friday is possible if the copy review is finished.');
+});
+test('reselecting the saved classification cannot change anything',()=>{
+  const s=initial(), p=savedPatch(s,'Decided',false);assert.throws(()=>apply(s,p,'Decided',false),/already saved/);
+});

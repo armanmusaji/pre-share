@@ -16,6 +16,7 @@ export function initial() {
   ] };
 }
 export const linked = snapshot => snapshot.items.filter(i => i.claims.includes('launch'));
+const repairIds = ['recap-launch', 'task-launch', 'task-announcement', 'task-checklist'];
 const repairs = {
   Decided: [['Launch Friday', null], ['Launch Friday', 'Ready'], ['Send the launch announcement', 'Ready'], ['Close the launch checklist', 'Ready']],
   Conditional: [['Friday is possible if the copy review is finished.', null], ['Confirm the copy review before confirming Friday', 'Needs review'], ['Wait for launch confirmation before sending the announcement', 'Waiting'], ['Keep the launch checklist open until the copy review is finished', 'Open']],
@@ -23,13 +24,14 @@ const repairs = {
 };
 export function savedPatch(snapshot, classification, condition) {
   if (!classifications.includes(classification)) throw new Error('Unknown classification.');
-  return { baseVersion: snapshot.version, classification, condition, edits: linked(snapshot).map((i, n) => ({ id: i.id, text: repairs[classification][n][0], state: repairs[classification][n][1] })) };
+  return { baseVersion: snapshot.version, classification, condition, edits: linked(snapshot).map(i => { const values = repairs[classification][repairIds.indexOf(i.id)]; return { id: i.id, text: values[0], state: values[1] }; }) };
 }
 const exactKeys = (obj, keys) => obj && typeof obj === 'object' && !Array.isArray(obj) && Object.keys(obj).length === keys.length && keys.every(k => Object.hasOwn(obj, k));
 export function validate(snapshot, candidate, requested, confirmed) {
   const fail = reason => ({ ok: false, reason });
   if (!exactKeys(candidate, ['baseVersion', 'classification', 'condition', 'edits'])) return fail('The response changed the document structure.');
   if (candidate.baseVersion !== snapshot.version) return fail('This response belongs to an older version. Request a new preview.');
+  if (requested === snapshot.classification) return fail('This classification is already saved. Nothing needs to change.');
   if (candidate.classification !== requested || !classifications.includes(requested)) return fail('The response did not preserve your classification.');
   if (candidate.condition !== confirmed || (requested === 'Conditional' && confirmed !== true) || (requested !== 'Conditional' && confirmed !== false)) return fail('The source condition must match your selection.');
   if (!Array.isArray(candidate.edits)) return fail('The response did not contain a list of changes.');
