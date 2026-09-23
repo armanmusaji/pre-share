@@ -54,3 +54,12 @@ test('saved repairs follow item IDs even when display order changes',()=>{
 test('reselecting the saved classification cannot change anything',()=>{
   const s=initial(), p=savedPatch(s,'Decided',false);assert.throws(()=>apply(s,p,'Decided',false),/already saved/);
 });
+
+test('expanded recap has valid source references and only four launch-dependent items',()=>{
+  const s=initial(), ids=new Set(quotes.map(q=>q.id));
+  assert.equal(ids.size,quotes.length);
+  for(const item of s.items) for(const id of item.sources) assert.ok(ids.has(id),id);
+  assert.equal(s.items.filter(i=>i.claims.includes('launch')).length,4);
+  const next=apply(s,conditional(s),'Conditional',true);
+  for(const id of ['recap-context','recap-feedback','recap-research']) assert.deepEqual(next.items.find(i=>i.id===id),s.items.find(i=>i.id===id));
+});

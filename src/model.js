@@ -1,8 +1,17 @@
 export const classifications = ['Decided', 'Conditional', 'Open'];
 export const quotes = Object.freeze([
+  { id: 'q-purpose', speaker: 'Maya', time: '00:18', text: 'Today we need to review whether saved views is ready to launch. People will be able to save their filters instead of rebuilding the same support queue every morning.' },
+  { id: 'q-ready', speaker: 'Sam', time: '01:12', text: 'The save and rename flows are implemented in the test environment. We walked through those yesterday. The feature itself is ready for the launch review.' },
+  { id: 'q-feedback', speaker: 'Jules', time: '02:24', text: 'In the sessions, people understood saving a view. The confusing part was whether a saved view was private or visible to the team. That distinction needs to be clearer in the copy.' },
+  { id: 'q-copy', speaker: 'Maya', time: '03:40', text: 'Let’s keep the scope to saved views. The current copy still needs a review, especially the visibility labels and the announcement. We have not signed that off.' },
+  { id: 'q-announcement', speaker: 'Sam', time: '04:32', text: 'The announcement is drafted. I do not want to send it and then have to explain a different set of labels when people open the product.' },
+  { id: 'q-question', speaker: 'Jules', time: '05:16', text: 'Are we committing to Friday now, or is that still the date we are aiming for?' },
+  { id: 'q-wait', speaker: 'Maya', time: '06:03', text: 'It is the target. We need to see the finished copy before treating the date as confirmed.' },
+  { id: 'q-plan', speaker: 'Sam', time: '07:21', text: 'Then the announcement and checklist need to follow that confirmation. I can coordinate those rather than treating them as separate launch decisions.' },
   { id: 'q-launch', speaker: 'Maya', time: '08:42', text: 'Friday is possible if the copy review is finished.' },
   { id: 'q-work', speaker: 'Sam', time: '08:49', text: 'I will coordinate the launch, send the announcement once we confirm it, and keep the launch checklist open until the copy review is done.' },
   { id: 'q-research', speaker: 'Jules', time: '09:06', text: 'I will share the research notes with the team. That can happen independently of the launch.' },
+  { id: 'q-close', speaker: 'Maya', time: '09:38', text: 'That gives us a way forward. Keep the visibility feedback with the copy review so we do not lose the reason for those wording changes.' },
 ]);
 const item = (id, kind, text, state, claims, sources, owner = null) => ({ id, kind, text, state, claims, sources, owner });
 export function initial() {
@@ -13,6 +22,9 @@ export function initial() {
     item('task-announcement', 'task', 'Send the launch announcement', 'Ready', ['launch'], ['q-work'], 'Sam'),
     item('task-checklist', 'task', 'Close the launch checklist', 'Ready', ['launch'], ['q-work'], 'Sam'),
     item('task-research', 'task', 'Share the research notes', 'Ready', ['research'], ['q-research'], 'Jules'),
+    item('recap-context', 'recap', 'Saved views lets support teams save their filters instead of rebuilding a queue each morning. The save and rename flows are implemented in the test environment and ready for launch review.', null, ['feature'], ['q-purpose', 'q-ready']),
+    item('recap-feedback', 'recap', 'Research participants understood saving a view, but the distinction between private and team-visible views was unclear. The visibility labels and launch announcement still need a copy review.', null, ['feedback', 'copy'], ['q-feedback', 'q-copy', 'q-announcement']),
+    item('recap-research', 'recap', 'Jules will share the research notes independently of the launch. The visibility feedback should stay with the copy review to explain the wording changes.', null, ['research'], ['q-research', 'q-close']),
   ] };
 }
 export const linked = snapshot => snapshot.items.filter(i => i.claims.includes('launch'));
