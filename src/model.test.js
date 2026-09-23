@@ -1,0 +1,47 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { initial, savedPatch, validate, apply, restore, quotes, classifications } from './model.js';
+const conditional = s => savedPatch(s, 'Conditional', true);
+test('all six classification transitions preserve unrelated items, owners, links, and quotes', () => {
+  const sources = JSON.stringify(quotes);
+  for (const from of classifications) for (const to of classifications) {
+    if (from === to) continue;
+    let s = initial();
+    if (from !== 'Decided') s = apply(s, savedPatch(s, from, from === 'Conditional'), from, from === 'Conditional');
+    const next = apply(s, savedPatch(s, to, to === 'Conditional'), to, to === 'Conditional');
+    assert.deepEqual(next.items.filter(i => !i.claims.includes('launch')), s.items.filter(i => !i.claims.includes('launch')));
+    next.items.forEach((i,n) => { assert.deepEqual(i.claims,s.items[n].claims); assert.deepEqual(i.sources,s.items[n].sources); assert.equal(i.owner,s.items[n].owner); });
+    assert.equal(next.classification,to);
+  }
+  assert.equal(JSON.stringify(quotes),sources);
+});
+test('conditional repair changes meaning and holds downstream execution',()=>{
+  const s=initial(), n=apply(s,conditional(s),'Conditional',true);
+  assert.match(n.items[0].text,/if the copy review/);
+  assert.deepEqual(n.items.filter(i=>i.kind==='task').map(i=>i.state),['Needs review','Waiting','Open','Ready']);
+});
+test('whole patch rejected if unrelated task changes, with no mutation',()=>{
+  const s=initial(), before=structuredClone(s), p=conditional(s);
+  p.edits.push({id:'task-research',text:'Delay notes',state:'Waiting'});
+  assert.match(validate(s,p,'Conditional',true).reason,/not linked/);
+  assert.throws(()=>apply(s,p,'Conditional',true)); assert.deepEqual(s,before);
+});
+for (const [name,mutate] of [
+  ['missing item', p=>p.edits.pop()], ['duplicate item',p=>p.edits[1]={...p.edits[0]}],
+  ['protected field',p=>p.edits[0].sources=[]],['invalid status',p=>p.edits[1].state='Done'],
+  ['empty text',p=>p.edits[0].text=' '],['oversized text',p=>p.edits[0].text='x'.repeat(241)],
+  ['changed classification',p=>p.classification='Open'],['missing condition',p=>p.condition=false],
+  ['extra top-level field',p=>p.transcript='changed'],['invalid edits',p=>p.edits=null],
+]) test(`rejects ${name}`,()=>{const s=initial(),p=conditional(s);mutate(p);assert.equal(validate(s,p,'Conditional',true).ok,false);});
+test('rejects malformed response',()=>{for(const p of [null,[],{},'text'])assert.equal(validate(initial(),p,'Conditional',true).ok,false);});
+test('preview leaves accepted state unchanged; undo restores content with a new version',()=>{
+  const s=initial(),before=structuredClone(s),p=conditional(s);assert.deepEqual(s,before);
+  const n=apply(s,p,'Conditional',true),undone=restore(n,s);
+  assert.deepEqual({...undone,version:0},s);assert.equal(undone.version,2);
+  assert.equal(validate(undone,p,'Conditional',true).ok,false);
+});
+test('late responses cannot apply after another accept or reset',()=>{
+  const s=initial(),p=conditional(s),n=apply(s,p,'Conditional',true);
+  assert.throws(()=>apply(n,p,'Conditional',true),/older version/);
+  assert.throws(()=>apply(restore(n,initial()),p,'Conditional',true),/older version/);
+});
