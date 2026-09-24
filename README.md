@@ -1,5 +1,7 @@
 # Pre Share
 
+More detail: [research](docs/research.md) · [build history](docs/builds.md) · [reviews](docs/reviews.md) · [decisions](docs/decisions.md) · [checklist](docs/checklist.md)
+
 Self-initiated portfolio experiment by Arman Musaji. Built by GPT Astra; Claude reviews at the gates.
 
 This prototype implements an optional review feature inside a fictional meeting assistant. Review decision factors opens read-only context; Correct this decision starts a separate preview, acceptance, and undo flow. This is a deployed static prototype with authored saved examples only. No live model, outgoing messages, or external data. All meeting content is fictional; the initial error is intentionally seeded.
