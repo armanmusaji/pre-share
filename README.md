@@ -2,7 +2,7 @@
 
 Self-initiated portfolio experiment by Arman Musaji. Built by GPT Astra; Claude reviews at the gates.
 
-Pass 06 implements an optional review feature inside a fictional meeting assistant. Review Decision Factors opens read-only context; Correct this decision starts a separate preview, acceptance, and undo flow. This is a local working prototype with authored saved examples only. No live model, outgoing messages, or external data. All meeting content is fictional; the initial error is intentionally seeded.
+This prototype implements an optional review feature inside a fictional meeting assistant. Review Decision Factors opens read-only context; Correct this decision starts a separate preview, acceptance, and undo flow. This is a local working prototype with authored saved examples only. No live model, outgoing messages, or external data. All meeting content is fictional; the initial error is intentionally seeded.
 
 ## Run
 
@@ -14,6 +14,8 @@ A claim classification controls one recap line and three dependent tasks. A sepa
 
 The rejection example deliberately appends a change to the unrelated research task. It is labeled in the interface; it is not evidence of a live model failure.
 
-## Remaining before v1
+## Shipping scope
+Authored examples are the approved final scope, not a temporary substitute awaiting live AI. No API key, server, model calls, or inference charges. Source links open the full fictional transcript at relevant passages. The dependency links are authored; the app does not discover them automatically.
 
-Live server endpoint, provider and spend limits, request cancellation and timeout, service-failure paths, human comprehension check, full assistive-technology evaluation, deployment, and Claude's Gate B. No real-user validation is claimed.
+## Verification and release
+Run the contract tests and production build, verify the browser flow, deploy the static app, and complete Claude's Gate B critique. Real-user testing is outside this project's scope. No user validation or live-model reliability is claimed; a full screen reader evaluation has not been completed.
