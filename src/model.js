@@ -5,11 +5,11 @@ export const quotes = Object.freeze([
   { id: 'q-feedback', speaker: 'Jules', time: '02:24', text: 'In the sessions, people understood saving a view. The confusing part was whether a saved view was private or visible to the team. That distinction needs to be clearer in the copy.' },
   { id: 'q-copy', speaker: 'Maya', time: '03:40', text: 'Let’s keep the scope to saved views. The current copy still needs a review, especially the visibility labels and the announcement. We have not signed that off.' },
   { id: 'q-announcement', speaker: 'Sam', time: '04:32', text: 'The announcement is drafted. I do not want to send it and then have to explain a different set of labels when people open the product.' },
-  { id: 'q-question', speaker: 'Jules', time: '05:16', text: 'Are we committing to Friday now, or is that still the date we are aiming for?' },
-  { id: 'q-wait', speaker: 'Maya', time: '06:03', text: 'It is the target. We need to see the finished copy before treating the date as confirmed.' },
-  { id: 'q-plan', speaker: 'Sam', time: '07:21', text: 'Then the announcement and checklist need to follow that confirmation. I can coordinate those rather than treating them as separate launch decisions.' },
+  { id: 'q-question', speaker: 'Jules', time: '05:16', text: 'The walkthrough notes are ready. I can share them with the team this afternoon.' },
+  { id: 'q-wait', speaker: 'Maya', time: '06:03', text: 'Let’s plan on Friday. We can use the same release channel as last time.' },
+  { id: 'q-plan', speaker: 'Sam', time: '07:21', text: 'I have the launch checklist alongside the announcement draft.' },
   { id: 'q-launch', speaker: 'Maya', time: '08:42', text: 'Friday is possible if the copy review is finished.' },
-  { id: 'q-work', speaker: 'Sam', time: '08:49', text: 'I will coordinate the launch, send the announcement once we confirm it, and keep the launch checklist open until the copy review is done.' },
+  { id: 'q-work', speaker: 'Sam', time: '08:49', text: 'I’ll coordinate the launch, handle the announcement, and maintain the checklist.' },
   { id: 'q-research', speaker: 'Jules', time: '09:06', text: 'I will share the research notes with the team. That can happen independently of the launch.' },
   { id: 'q-close', speaker: 'Maya', time: '09:38', text: 'That gives us a way forward. Keep the visibility feedback with the copy review so we do not lose the reason for those wording changes.' },
 ]);
@@ -31,8 +31,8 @@ export const linked = snapshot => snapshot.items.filter(i => i.claims.includes('
 const repairIds = ['recap-launch', 'task-launch', 'task-announcement', 'task-checklist'];
 const repairs = {
   Decided: [['Launch Friday', null], ['Launch Friday', 'Ready'], ['Send the launch announcement', 'Ready'], ['Close the launch checklist', 'Ready']],
-  Conditional: [['Friday is possible if the copy review is finished.', null], ['Confirm the copy review before confirming Friday', 'Needs review'], ['Wait for launch confirmation before sending the announcement', 'Waiting'], ['Keep the launch checklist open until the copy review is finished', 'Open']],
-  Open: [['The launch date is open; Friday is a possibility, not a commitment.', null], ['Resolve the launch decision after reviewing the copy', 'Needs decision'], ['Hold the announcement until the launch is confirmed', 'Waiting'], ['Keep the launch checklist open while the copy review and launch decision are unresolved', 'Open']],
+  Conditional: [['Friday is possible if the copy review is finished.', null], ['Coordinate the launch once the date is confirmed', 'Needs review'], ['Wait for launch confirmation before sending the announcement', 'Waiting'], ['Keep the launch checklist open until the copy review is finished', 'Open']],
+  Open: [['The launch date is open; Friday is a possibility, not a commitment.', null], ['Coordinate the launch once the date is confirmed', 'Needs decision'], ['Hold the announcement until the launch is confirmed', 'Waiting'], ['Keep the launch checklist open while the copy review and launch decision are unresolved', 'Open']],
 };
 export function savedPatch(snapshot, classification, condition) {
   if (!classifications.includes(classification)) throw new Error('Unknown classification.');

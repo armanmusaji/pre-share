@@ -2,7 +2,7 @@
 
 Self-initiated portfolio experiment by Arman Musaji. Built by GPT Astra; Claude reviews at the gates.
 
-This prototype implements an optional review feature inside a fictional meeting assistant. Review Decision Factors opens read-only context; Correct this decision starts a separate preview, acceptance, and undo flow. This is a local working prototype with authored saved examples only. No live model, outgoing messages, or external data. All meeting content is fictional; the initial error is intentionally seeded.
+This prototype implements an optional review feature inside a fictional meeting assistant. Review decision factors opens read-only context; Correct this decision starts a separate preview, acceptance, and undo flow. This is a deployed static prototype with authored saved examples only. No live model, outgoing messages, or external data. All meeting content is fictional; the initial error is intentionally seeded.
 
 ## Run
 
@@ -19,3 +19,8 @@ Authored examples are the approved final scope, not a temporary substitute await
 
 ## Verification and release
 Run the contract tests and production build, verify the browser flow, deploy the static app, and complete Claude's Gate B critique. Real-user testing is outside this project's scope. No user validation or live-model reliability is claimed; a full screen reader evaluation has not been completed.
+
+## Gate B revision
+Decisions and dependent tasks lead the product. Evidence contains verbatim quotes, with one transcript dialog for full and contextual reading. A single selection records Confirmed, Conditional on the copy review, or Not decided. Apply marks changed items and exposes Undo beside Decisions. Cancellation returns to the originating view.
+
+Author controls hold Restart and the rejection test. Rejection is available only for changed Conditional or Not decided selections. No automatic interpretation, error detection, model calls, or assignment of decision authority is implied. The condition flag in the patch contract comes from the Conditional selection, not a separate checkbox.
