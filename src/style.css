@@ -35,3 +35,7 @@
 
 /* Pass 08: explicit decisions section; remove decorative topic chips. */
 .decisions-section{margin:32px 0;padding-top:24px;border-top:1px solid var(--line)}.decisions-section>h2{font-size:22px;line-height:1.25;letter-spacing:-.035em;margin:0 0 20px}.decisions-section .decision-row{margin-top:0}.decisions-section .owner-row{margin-bottom:0}
+
+/* Pass 09: full transcript with contextual passage navigation. */
+.transcript-dialog[open]{display:flex;flex-direction:column;width:min(760px,calc(100vw - 32px));max-height:85dvh;padding:0;overflow:hidden}.transcript-dialog .dialog-head{padding:20px 24px;margin:0;flex-shrink:0;border-bottom:1px solid var(--line);align-items:start}.transcript-dialog .dialog-head button{flex-shrink:0}.transcript-dialog .dialog-head .hint{margin:8px 0 0}.dialog-transcript{overflow:auto;padding:8px 24px 24px}.dialog-transcript figure{padding:18px 16px;margin:16px 0;border:1px solid transparent;scroll-margin-top:16px}.dialog-transcript figure.transcript-match{background:var(--tint);border-color:var(--accent);border-left-width:4px}.passage-label{display:block;color:var(--accent);font-size:11px;margin-top:8px}.document-heading>button{flex-shrink:0}
+@media(max-width:700px){.transcript-dialog .dialog-head{padding:16px;gap:12px}.transcript-dialog .dialog-head h2{font-size:20px}.dialog-transcript{padding:0 12px 16px}.transcript-dialog .dialog-head button{font-size:12px;padding:10px}.document-heading{flex-wrap:wrap;gap:12px}}
