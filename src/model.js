@@ -69,3 +69,10 @@ export function apply(snapshot, candidate, requested, confirmed) {
   }) };
 }
 export const restore = (current, previous) => ({ ...structuredClone(previous), version: current.version + 1 });
+
+// Display the evidence inherited from the corrected claim without rewriting protected source links.
+export function sourcePassages(snapshot, item) {
+  const repairedTask = item.kind === 'task' && item.claims.includes('launch') && ['Conditional', 'Open'].includes(snapshot.classification);
+  const conditionSources = repairedTask ? snapshot.items.find(i => i.id === 'recap-launch').sources : [];
+  return [...new Set([...item.sources, ...conditionSources])];
+}

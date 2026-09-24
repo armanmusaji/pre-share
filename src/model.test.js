@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { initial, savedPatch, validate, apply, restore, quotes, classifications } from './model.js';
+import { initial, savedPatch, validate, apply, restore, quotes, classifications, sourcePassages } from './model.js';
 const conditional = s => savedPatch(s, 'Conditional', true);
 test('all six classification transitions preserve unrelated items, owners, links, and quotes', () => {
   const sources = JSON.stringify(quotes);
@@ -62,4 +62,21 @@ test('expanded recap has valid source references and only four launch-dependent 
   assert.equal(s.items.filter(i=>i.claims.includes('launch')).length,4);
   const next=apply(s,conditional(s),'Conditional',true);
   for(const id of ['recap-context','recap-feedback','recap-research']) assert.deepEqual(next.items.find(i=>i.id===id),s.items.find(i=>i.id===id));
+});
+
+test('every repaired task cites its work and condition, without changing stored sources', () => {
+  const start = initial();
+  for (const classification of ['Conditional', 'Open']) {
+    const repaired = apply(start, savedPatch(start, classification, classification === 'Conditional'), classification, classification === 'Conditional');
+    const before = structuredClone(repaired);
+    for (const id of ['task-launch', 'task-announcement', 'task-checklist']) {
+      const task = repaired.items.find(i => i.id === id);
+      assert.deepEqual(new Set(sourcePassages(repaired, task)), new Set(['q-work', 'q-launch']));
+    }
+    const research = repaired.items.find(i => i.id === 'task-research');
+    assert.deepEqual(sourcePassages(repaired, research), ['q-research']);
+    assert.deepEqual(repaired, before);
+    const undone = restore(repaired, start);
+    assert.deepEqual(sourcePassages(undone, undone.items.find(i => i.id === 'task-announcement')), ['q-work']);
+  }
 });
