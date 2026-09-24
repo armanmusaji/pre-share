@@ -1,8 +1,8 @@
-# Before You Share
+# Pre Share
 
 Self-initiated portfolio experiment by Arman Musaji. Built by GPT Astra; Claude reviews at the gates.
 
-Pass 01 is a local working prototype with authored saved examples only. No live model, outgoing messages, or external data. All meeting content is fictional; the initial error is intentionally seeded.
+Pass 06 implements an optional review feature inside a fictional meeting assistant. Review Decision Factors opens read-only context; Correct this decision starts a separate preview, acceptance, and undo flow. This is a local working prototype with authored saved examples only. No live model, outgoing messages, or external data. All meeting content is fictional; the initial error is intentionally seeded.
 
 ## Run
 
