@@ -7,7 +7,7 @@
 | Decision | Proposed by | Arman's call |
 |---|---|---|
 | Explore correcting AI mistakes | Arman | Approved the territory; Astra proposed the concept |
-| Three simple choices instead of free rewriting | Claude | Approved |
+| Narrow scope: three answers, repairs change only linked items | Claude | Approved |
 | Correction is an occasional fix, not a routine chore | Arman | Rebuilt around it |
 | A feature, not a standalone product | Arman | Renamed and reframed |
 | Desk research instead of user testing for this small project | Astra proposed user testing | Desk research only |

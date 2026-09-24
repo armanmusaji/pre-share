@@ -13,4 +13,4 @@
 - Apply, cancel from every entry point, undo, and try a change that reaches too far. Check the content, where focus lands, and the work that should stay the same.
 
 ## Does it work?
-Claude ran it once on the fixed build, and none of the repeat problems came back. But the checklist was written from those same problems, so that's one data point, not proof. Project three is the real test.
+The first independent run passed five checks and found incomplete sources in the sixth. We fixed those before this draft. None of the repeat problems came back, but the checklist was written from those same problems, and one run does not prove it prevents future problems. Project three is the real test.
